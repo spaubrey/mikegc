@@ -124,6 +124,7 @@ variables, and the [Sentry data audit](docs/sentry-data-audit.md).
 - [Documentation index](docs/README.md)
 - [Local development](docs/local-development.md)
 - [Manual and production deployment](docs/deployment.md)
+- [Cloudflare self-hosting](docs/cloudflare.md)
 - [Troubleshooting](docs/troubleshooting.md)
 - [MCP connectors](docs/connectors.md)
 - [Google Workspace: Drive, Gmail, and Calendar](docs/google-workspace.md)
