@@ -9,7 +9,7 @@ COPY frontend/ ./
 COPY packages/contracts /web/packages/contracts
 COPY packages/ui /web/packages/ui
 COPY packages/client /web/packages/client
-ENV SENTRY_DISABLED=true NEXT_PUBLIC_SENTRY_DISABLED=true NEXT_TELEMETRY_DISABLED=1
+ENV SENTRY_DISABLED=true NEXT_PUBLIC_SENTRY_DISABLED=true NEXT_TELEMETRY_DISABLED=1 NEXT_OUTPUT_STANDALONE=1
 RUN npm run build
 
 # Mirrors backend/Dockerfile, including native document tools and migration CLI.
@@ -24,7 +24,11 @@ COPY backend/ ./
 COPY packages/contracts /packages/contracts
 COPY docker/db-init/adopt-ledger.sh ./docker/db-init/adopt-ledger.sh
 RUN npm run build
-COPY --from=frontend /web /web
+# Ship the traced production server, not the build toolchain and dev dependencies.
+# next.config.ts's repository tracing root nests server.js under frontend/.
+COPY --from=frontend /web/frontend/.next/standalone /web
+COPY --from=frontend /web/frontend/.next/static /web/frontend/.next/static
+COPY --from=frontend /web/frontend/public /web/frontend/public
 COPY cloudflare/start.mjs cloudflare/runtime.mjs /opt/mikegc/
 ENV NODE_ENV=production NODE_OPTIONS=--enable-source-maps SENTRY_DISABLED=true
 EXPOSE 3000

@@ -55,7 +55,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     delete process.env.MIKE_ENV;
     process.exitCode = await supervise([
       { command: process.execPath, args: ['--enable-source-maps', 'dist/index.js'], cwd: '/app', env: env.backend },
-      { command: process.execPath, args: ['node_modules/next/dist/bin/next', 'start', '-H', '0.0.0.0', '-p', '3000'], cwd: '/web/frontend', env: env.frontend },
+      { command: process.execPath, args: ['server.js'], cwd: '/web/frontend', env: env.frontend },
     ]);
   } catch {
     console.error('[cloudflare] Invalid container configuration');
