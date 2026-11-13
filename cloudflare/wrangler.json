@@ -1,0 +1,22 @@
+{
+  "name": "mikegc",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-12",
+  "workers_dev": true,
+  "preview_urls": false,
+  "containers": [
+    {
+      "class_name": "MikeGC",
+      "image": "./Dockerfile",
+      "image_build_context": "..",
+      "instance_type": "standard-2",
+      "max_instances": 1
+    }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "MIKEGC", "class_name": "MikeGC" }]
+  },
+  "exports": { "MikeGC": { "type": "durable-object", "storage": "sqlite" } },
+  "triggers": { "crons": ["* * * * *"] },
+  "observability": { "enabled": true }
+}
